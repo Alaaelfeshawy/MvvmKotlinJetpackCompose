@@ -7,8 +7,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,6 +21,7 @@ import com.example.mvvmKotlinJetpackCompose.ui.theme.CoinTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TopBar(
     scope: CoroutineScope,
@@ -36,7 +41,10 @@ fun TopBar(
 
     },
         navigationIcon = {
-            IconButton(onClick = {
+            IconButton(
+                modifier = Modifier.semantics { testTagsAsResourceId = true }
+                .testTag("drawer"),
+                onClick = {
                 scope.launch { scaffoldState.drawerState.open() }
             }) {
                 Icon(Icons.Default.Menu, "",

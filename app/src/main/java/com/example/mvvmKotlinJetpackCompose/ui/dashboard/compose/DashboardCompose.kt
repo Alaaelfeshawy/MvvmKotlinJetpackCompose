@@ -10,16 +10,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import com.example.mvvmKotlinJetpackCompose.R
 import com.example.mvvmKotlinJetpackCompose.data.others.MenuItem
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalFoundationApi
 @Composable
 fun DashboardContent(menuItems: List<MenuItem>, openActivity: (String) -> Unit={}) {
@@ -31,6 +35,8 @@ fun DashboardContent(menuItems: List<MenuItem>, openActivity: (String) -> Unit={
             .height(dimensionResource(R.dimen.dp_80)))
         Image(painter = painterResource(R.drawable.jetpack_logo),
             modifier = Modifier
+                .semantics { testTagsAsResourceId = true }
+                .testTag("dashboardimage")
                 .width(dimensionResource(id = R.dimen.dp_145))
                 .height(dimensionResource(id = R.dimen.dp_145)),
             contentDescription = "")

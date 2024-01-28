@@ -9,12 +9,15 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,6 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DrawerCompose(
     scope: CoroutineScope,
@@ -72,7 +76,7 @@ fun DrawerCompose(
         }
 
         Column(Modifier.padding(dimensionResource(R.dimen.dp_20))) {
-            DrawerItem(R.drawable.ic_home,
+            DrawerItem(modifier = Modifier , R.drawable.ic_home,
                 R.string.dashboard,
                 {
                     scope.launch {
@@ -81,7 +85,10 @@ fun DrawerCompose(
 
                 })
 
-            DrawerItem(R.drawable.ic_logout,
+            DrawerItem(
+                modifier = Modifier.semantics { testTagsAsResourceId = true }
+                    .testTag("Logout"),
+                R.drawable.ic_logout,
                 R.string.logout,
                 {
                     logout("logout")
@@ -95,9 +102,9 @@ fun DrawerCompose(
 
 
 @Composable
-fun DrawerItem(icon: Int, title: Int, onClick: () -> Unit) {
+fun DrawerItem(modifier: Modifier = Modifier ,icon: Int, title: Int, onClick: () -> Unit) {
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .height(dimensionResource(R.dimen.dp_60))
             .clickable { onClick() },

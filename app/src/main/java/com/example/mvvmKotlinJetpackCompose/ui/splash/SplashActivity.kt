@@ -10,11 +10,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mvvmKotlinJetpackCompose.R
@@ -100,12 +103,15 @@ class SplashActivity : BaseComponentActivity<SplashViewModel>() {
     }
 
 
+    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     private fun ImageAndAppName(showLoading: @Composable () -> Unit) {
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(painter = painterResource(R.drawable.jetpack_logo),
                 modifier = Modifier
+                    .semantics { testTagsAsResourceId = true }
+                    .testTag("splashimage")
                     .padding(top = dimensionResource(id = R.dimen.dp_100))
                     .width(dimensionResource(id = R.dimen.dp_120))
                     .height(dimensionResource(id = R.dimen.dp_120)),

@@ -12,12 +12,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -77,10 +80,10 @@ class LoginActivity : BaseComponentActivity<LoginViewModel>() {
         LoginCompose {
             TopImageAndText()
             var txtAccountNo by remember {
-                mutableStateOf("suorizwansayyed786@gmail.com") }
+                mutableStateOf("") }
 
             TextFieldUserName(txtAccountNo) { txtAccountNo = it }
-            var txtPass by remember { mutableStateOf("SuoRizwan") }
+            var txtPass by remember { mutableStateOf("") }
 
             TextFieldPassword(txtPass) {
                 txtPass = it
@@ -116,12 +119,14 @@ class LoginActivity : BaseComponentActivity<LoginViewModel>() {
     }
 
 
+    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     private fun TextFieldPassword(txtPass: String, setPass: (String) -> Unit={}) {
 
 
         TextField(modifier = Modifier
-            .testTag(stringResource(R.string.password))
+            .semantics { testTagsAsResourceId = true }
+            .testTag("password")
             .fillMaxWidth()
             .wrapContentHeight()
             .background(
@@ -157,11 +162,15 @@ class LoginActivity : BaseComponentActivity<LoginViewModel>() {
 
     }
 
+    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     private fun TopImageAndText() {
         Image(modifier = Modifier
             .padding(top = dimensionResource(id = R.dimen.dp_100))
-            .size(dimensionResource(id = R.dimen.dp_100)),
+            .size(dimensionResource(id = R.dimen.dp_100))
+            .semantics { testTagsAsResourceId = true }
+            .testTag("loginlogo")
+            ,
             painter = painterResource(id = R.drawable.jetpack_logo),
             contentDescription = "")
 
@@ -178,11 +187,13 @@ class LoginActivity : BaseComponentActivity<LoginViewModel>() {
 
     }
 
+    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     private fun TextFieldUserName(txtAccountNo: String, setAcc: (String) -> Unit={}) {
 
 
         TextField(modifier = Modifier
+            .semantics { testTagsAsResourceId = true }
             .testTag(stringResource(R.string.email_address))
             .fillMaxWidth()
             .wrapContentHeight()

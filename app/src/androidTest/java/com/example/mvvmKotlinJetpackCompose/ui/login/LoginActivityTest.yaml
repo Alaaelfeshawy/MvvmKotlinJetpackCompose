@@ -1,0 +1,24 @@
+appId: com.example.mvvmKotlinJetpackCompose
+---
+- launchApp
+- runFlow: "../splash/SplashActivityTest.yaml"
+- tapOn:
+   id: "drawer"
+- tapOn :
+   id : "Logout"
+- assertVisible:
+    id : "loginlogo"
+- assertVisible: "A demo App using kotlin, Mvvm, jetpack Compose, Unit testing."
+- assertVisible: "Email Address"
+- assertVisible: "Password"
+- assertVisible: "Sign In"
+- tapOn:
+    id : "Email Address"
+- inputText: "suorizwansayyed786@gmail.com"
+- hideKeyboard
+- tapOn:
+    id : "password"
+- inputText: "SuoRizwan"
+- hideKeyboard
+- tapOn: "Sign In"
+

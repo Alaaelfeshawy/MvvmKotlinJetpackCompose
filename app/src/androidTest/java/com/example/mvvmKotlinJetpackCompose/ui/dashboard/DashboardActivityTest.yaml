@@ -1,0 +1,19 @@
+appId: com.example.mvvmKotlinJetpackCompose
+---
+- launchApp
+- runFlow: "../splash/SplashActivityTest.yaml"
+- assertVisible:
+    text: "prepaid"
+    index: 0
+- assertVisible:
+    text: "gas"
+- assertVisible:
+      id: "dashboardimage"
+- assertVisible: "Home"
+- assertVisible: "History"
+- tapOn: "History"
+- assertVisible : "History"
+- back
+- assertVisible: "Other"
+- tapOn: "Other"
+- assertVisible : "Other"

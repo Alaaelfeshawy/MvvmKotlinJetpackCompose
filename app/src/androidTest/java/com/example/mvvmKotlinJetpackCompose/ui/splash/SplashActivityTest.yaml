@@ -1,0 +1,10 @@
+appId: com.example.mvvmKotlinJetpackCompose
+---
+- launchApp
+- assertVisible:
+    id: "splashimage"
+- assertVisible: "mvvmKotlinJetpackCompose"
+- extendedWaitUntil:
+    notVisible:
+       id: progress_tag
+    timeout: 10000
